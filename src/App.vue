@@ -105,9 +105,9 @@ onUnmounted(() => {
 	</header>
 
 	<!-- Mobile Sidebar -->
-	<section id="sideBar" class="md:hidden relative">
+	<section id="sideBar" class="relative md:hidden">
 		<div
-			class="fixed w-[calc(100vw-550px)] h-[calc(100vh-80px)] border-l border-gray-200 shadow-lg  shadow-gray-800 bg-white flex flex-col justify-between top-[80px] right-0">
+			class="fixed w-[calc(100vw-200px)] h-[calc(100vh-80px)] border-l border-gray-200 shadow-lg  shadow-gray-800 bg-white flex flex-col justify-between top-[80px] right-0">
 			<ul class="flex  flex-col  gap-0">
 				<div
 					class="bar-menu-block border-b border-gray-200 shadow-sm gap-3 font-light text-[1.0rem] flex justify-center text-white  w-full  h-[80px]  items-center">
