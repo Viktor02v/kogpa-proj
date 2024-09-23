@@ -105,7 +105,7 @@ onUnmounted(() => {
 	</header>
 
 	<!-- Mobile Sidebar -->
-	<section id="sideBar" class="relative md:hidden">
+	<section id="sideBar" class="relative z-50 md:hidden">
 		<div :aria-hidden="!(menuOpen && headerVisible && lastScrollTop > 0)"
 			:class="menuOpen && headerVisible && lastScrollTop >= 0 ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full'"
 			class="fixed w-[50vw] h-[91vh] border-l border-gray-200 shadow-lg  shadow-gray-800 bg-white flex flex-col justify-between top-[80px] right-0 overflow-y-auto transition-all duration-700 ease-in-out">
@@ -164,6 +164,9 @@ onUnmounted(() => {
 	<!-- Mobile Sidebar: End -->
 
 	<!-- Overlay -->
+	<div :class="menuOpen && headerVisible && lastScrollTop >= 0  ? 'opacity-60' : 'opacity-0'"
+		class="w-screen fixed h-screen transition-all duration-700 ease-in-out bg-black  z-40 ">
+	</div>
 	<!-- Main Content: Start -->
 	<main class="pt-[80px]">
 		Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quis consequuntur atque, veniam, facilis nemo sequi
