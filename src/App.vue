@@ -154,7 +154,7 @@ onUnmounted(() => {
 
 			<div id="language"
 				class="bar-menu-block border-t border-gray-200 shadow-sm gap-3 font-light text-[1.0rem] flex justify-center text-white  w-full  min-h-[80px]  items-center">
-				<div class="flex gap-1 pb-20 items-center text-[15px]">
+				<div class="flex gap-1 pb-10 items-center text-[15px]">
 					<Language fillColor="rgb(120, 120, 120)" />
 					<span class="menu-bar-item__lang">ENG</span>
 				</div>
