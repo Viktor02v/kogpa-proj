@@ -63,11 +63,11 @@ onUnmounted(() => {
 				</ul>
 
 				<!-- Desktop Adaptation -->
-				<ul class="menu hidden px-5 md:flex md:items-center  w-full">
+				<ul class="menu hidden px-5 md:flex md:items-center w-[100vw]">
 					<li class="logo">
 						<img width="150" src="/icons/kogpa-logo.png" alt="logo">
 					</li>
-					<ul class="menu-list flex justify-around w-[50%] text-[1.2rem]">
+					<ul class="menu-list flex justify-around lg:w-[60vw] md:w-[100vw] text-[1.2rem]">
 						<div class="flex md:relative items-center">
 							<li class="menu-item">
 								About
@@ -108,7 +108,7 @@ onUnmounted(() => {
 	<section id="sideBar" class="relative md:hidden">
 		<div :aria-hidden="!(menuOpen && headerVisible && lastScrollTop > 0)"
 			:class="menuOpen && headerVisible && lastScrollTop >= 0 ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full'"
-			class="fixed w-[50vw] h-[92vh] border-l border-gray-200 shadow-lg  shadow-gray-800 bg-white flex flex-col justify-between top-[80px] right-0 overflow-y-auto transition-all duration-700 ease-in-out">
+			class="fixed w-[50vw] h-[88vh] border-l border-gray-200 shadow-lg  shadow-gray-800 bg-white flex flex-col justify-between top-[80px] right-0 overflow-y-auto transition-all duration-700 ease-in-out">
 			<ul class="flex  flex-col">
 				<div
 					class="bar-menu-block border-b border-gray-200 shadow-sm gap-3 font-light text-[1.0rem] flex justify-center text-white  w-full  min-h-[80px]   items-center">
@@ -799,6 +799,5 @@ onUnmounted(() => {
 
 .menu-bar-item__lang {
 	color: rgb(120, 120, 120);
-
 }
 </style>
