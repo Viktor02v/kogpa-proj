@@ -110,11 +110,11 @@ onUnmounted(() => {
 				class="fixed w-[50vw] h-[91vh] border-l border-gray-200 shadow-lg  shadow-gray-800 bg-white flex flex-col justify-between top-[80px] right-0 overflow-y-auto transition-all duration-700 ease-in-out">
 
 				<ul class="flex flex-col">
-					<sideBarItem text="Home" />
-					<sideBarItem text="Contact" />
-					<sideBarItem text="Students" />
-					<sideBarItem text="Applicant" />
-					<sideBarItem text="College" />
+					<sideBarItem iconComponent="Home" iconColor="rgb(120, 120, 120)" text="Home" />
+					<sideBarItem iconComponent="Contact" iconColor="rgb(120, 120, 120)" text="Contact" />
+					<sideBarItem iconComponent="Students" iconColor="rgb(120, 120, 120)" text="Students" />
+					<sideBarItem iconComponent="Applicant" iconColor="rgb(120, 120, 120)" text="Applicant" />
+					<sideBarItem  iconComponent="College" iconColor="rgb(120, 120, 120)" text="College" />
 				</ul>
 
 
