@@ -1,13 +1,11 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
+import sideBarItem from './components/sideBarItem.vue';
+
 import Menu from 'vue-material-design-icons/Menu.vue';
 import Close from 'vue-material-design-icons/Close.vue';
-import Home from 'vue-material-design-icons/HomeAccount.vue';
-import Folder from 'vue-material-design-icons/FolderAccountOutline.vue';
 
-import MailBox from 'vue-material-design-icons/MailboxOpenOutline.vue';
-import Book from 'vue-material-design-icons/BookAccountOutline.vue';
-import BookAlert from 'vue-material-design-icons/BookAlert.vue';
+
 import Language from 'vue-material-design-icons/Earth.vue';
 
 
@@ -105,66 +103,35 @@ onUnmounted(() => {
 	</header>
 
 	<!-- Mobile Sidebar -->
-	<section id="sideBar" class="relative z-50 md:hidden">
-		<div :aria-hidden="!(menuOpen && headerVisible && lastScrollTop > 0)"
-			:class="menuOpen && headerVisible && lastScrollTop >= 0 ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full'"
-			class="fixed w-[50vw] h-[91vh] border-l border-gray-200 shadow-lg  shadow-gray-800 bg-white flex flex-col justify-between top-[80px] right-0 overflow-y-auto transition-all duration-700 ease-in-out">
-			<ul class="flex  flex-col">
-				<div
-					class="bar-menu-block border-b border-gray-200 shadow-sm gap-3 font-light text-[1.0rem] flex justify-center text-white  w-full  min-h-[80px]   items-center">
-					<Home fillColor="rgb(120, 120, 120)" />
-					<li class="menu-bar-item">
-						Home
-					</li>
-				</div>
+	<aside>
+		<section id="sideBar" class="relative z-50 md:hidden">
+			<div :aria-hidden="!(menuOpen && headerVisible && lastScrollTop > 0)"
+				:class="menuOpen && headerVisible && lastScrollTop >= 0 ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full'"
+				class="fixed w-[50vw] h-[91vh] border-l border-gray-200 shadow-lg  shadow-gray-800 bg-white flex flex-col justify-between top-[80px] right-0 overflow-y-auto transition-all duration-700 ease-in-out">
 
-				<div
-					class="bar-menu-block border-b border-gray-200 shadow-sm gap-3 font-light text-[1.0rem] flex justify-center text-white  w-full min-h-[80px]   items-center">
-					<MailBox fillColor="rgb(120, 120, 120)" />
-					<li class="menu-bar-item">
-						Contact
-					</li>
-				</div>
+				<ul class="flex flex-col">
+					<sideBarItem text="Home" />
+					<sideBarItem text="Contact" />
+					<sideBarItem text="Students" />
+					<sideBarItem text="Applicant" />
+					<sideBarItem text="College" />
+				</ul>
 
-				<div
-					class="bar-menu-block border-b border-gray-200 shadow-sm gap-3 font-light text-[1.0rem] flex justify-center text-white  w-full  min-h-[80px]  items-center">
-					<Book fillColor="rgb(120, 120, 120)" />
-					<li class="menu-bar-item">
-						Students
-					</li>
-				</div>
 
-				<div
-					class="bar-menu-block border-b border-gray-200 shadow-sm gap-3 font-light text-[1.0rem] flex justify-center text-white  w-full  min-h-[80px]  items-center">
-					<BookAlert fillColor="rgb(120, 120, 120)" />
-					<li class="menu-bar-item">
-						Applicant
-					</li>
-				</div>
-
-				<div
-					class="bar-menu-block border-b border-gray-200 shadow-sm gap-3 font-light text-[1.0rem] flex justify-center text-white  w-full min-h-[80px]  items-center">
-					<Folder fillColor="rgb(120, 120, 120)" />
-					<li class="menu-bar-item">
-						College
-					</li>
-				</div>
-
-			</ul>
-
-			<div id="language"
-				class="bar-menu-block border-t border-gray-200 shadow-sm gap-3 font-light text-[1.0rem] flex justify-center text-white  w-full  min-h-[80px]  items-center">
-				<div class="flex gap-1 pb-10 items-center text-[15px]">
-					<Language fillColor="rgb(120, 120, 120)" />
-					<span class="menu-bar-item__lang">ENG</span>
+				<div id="language"
+					class="bar-menu-block border-t border-gray-200 shadow-sm gap-3 font-light text-[1.0rem] flex justify-center text-white  w-full  min-h-[80px]  items-center">
+					<div class="flex gap-1 pb-10 items-center text-[15px]">
+						<Language fillColor="rgb(120, 120, 120)" />
+						<span class="menu-bar-item__lang">ENG</span>
+					</div>
 				</div>
 			</div>
-		</div>
-	</section>
+		</section>
+	</aside>
 	<!-- Mobile Sidebar: End -->
 
 	<!-- Overlay -->
-	<div :class="menuOpen && headerVisible && lastScrollTop >= 0  ? 'opacity-60' : 'opacity-0'"
+	<div :class="menuOpen && headerVisible && lastScrollTop >= 0 ? 'opacity-60' : 'opacity-0'"
 		class="w-screen fixed h-screen transition-all duration-700 ease-in-out bg-black  z-40 ">
 	</div>
 	<!-- Main Content: Start -->
@@ -789,15 +756,7 @@ onUnmounted(() => {
 	transition: 0s
 }
 
-.menu-bar-item {
-	padding-right: 1.2rem;
-	color: rgb(120, 120, 120);
-}
 
-.menu-bar-item:active {
-	transition: color 0.3s ease;
-	color: rgb(255, 255, 255);
-}
 
 .menu-bar-item__lang {
 	color: rgb(120, 120, 120);
