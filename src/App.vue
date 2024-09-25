@@ -693,21 +693,22 @@ onUnmounted(() => {
 	right: 0;
 	top: 35%;
 	margin-left: 0.5rem;
-	width: 8px;
-	height: 8px;
+	width: 6px;
+	height: 6px;
 	border-right: 2px solid rgba(2, 37, 10, 0.534);
 	border-bottom: 2px solid rgb(92, 3, 3);
 	transform: rotate(45deg);
 	transition: transform 0.3s ease;
-	border-radius: 50%;
-	opacity: 0;
+	opacity: 0.2;
 	transition: ease-in-out 0.6s;
 }
 
 .menu-item:hover .chevron {
 	transform: rotate(-858deg);
-
+	border-radius: 50%;
 	opacity: 1;
+	width: 8px;
+	height: 8px;
 }
 
 /* SideBar */
