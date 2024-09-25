@@ -15,6 +15,10 @@ let lastScrollTop = 0;
 let scrollingDown = ref(false);
 let headerVisible = ref(true);
 
+const headerIconMap = {
+	menu: Menu,
+	close: Close,
+};
 function handleScroll() {
 	let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
@@ -46,17 +50,19 @@ onUnmounted(() => {
 
 
 <template>
-	<header id="header" class="header fixed w-[100vw] transition-all duration-500 ease-in-out"
+	<!-- Header -->
+	<header id="header" class="header fixed w-full transition-all duration-500 ease-in-out"
 		:class="headerVisible ? 'opacity-100 ' : 'opacity-0 -translate-y-full'">
 		<div class=" shadow-md flex items-center h-[81px] w-full">
 			<nav id="navigation" class="w-full">
 				<!-- Mobile Adaptation -->
 				<ul class="menu flex justify-center md:hidden">
 					<li class="menu-item">
-						<img width="160" src="/icons/kogpa-logo.png" alt="logo">
+						<img width="160" src="/icons/kogpa-logo.png" alt="Kogpa Accademy Logo">
 					</li>
-					<li @click="menuOpen = !menuOpen" class="menu-item fixed top-7 right-5">
-						<component :is="menuOpen ? Close : Menu" />
+					<li @click="menuOpen = !menuOpen" class="menu-item transition-all duration-500  fixed top-7 right-5"					
+						:aria-expanded="menuOpen.toString()" aria-controls="navigation">
+						<component  :is="menuOpen ? Close : Menu" :key="menuOpen ? headerIconMap.close : headerIconMap.menu" />
 					</li>
 				</ul>
 
@@ -65,76 +71,62 @@ onUnmounted(() => {
 					<li class="logo">
 						<img width="150" src="/icons/kogpa-logo.png" alt="logo">
 					</li>
-					<ul class="menu-list flex justify-around lg:w-[60vw] md:w-[100vw] text-[1.2rem]">
-						<div class="flex md:relative items-center">
-							<li class="menu-item">
-								About
-								<span class="chevron chevron-down"></span>
-							</li>
+					<li class="menu-list flex justify-around lg:w-[60vw] md:w-[100vw] text-[1.2rem]">
+						<div class="menu-item ">
+							About
+							<span class="chevron chevron-down"></span>
 						</div>
-						<div class="flex md:relative items-center">
-							<li class="menu-item">
-								Contact
-								<span class="chevron chevron-down"></span>
-							</li>
+						<div class="menu-item  items-center">
+							Contact
+							<span class="chevron chevron-down"></span>
 						</div>
-						<div class="flex md:relative items-center">
-							<li class="menu-item ">
-								Students
-								<span class="chevron chevron-down"></span>
-							</li>
+						<div class="menu-item  items-center">
+							Students
+							<span class="chevron chevron-down"></span>
 						</div>
-						<div class="flex md:relative items-center">
-							<li class="menu-item">
-								Applicant
-								<span class="chevron chevron-down"></span>
-							</li>
+						<div class="menu-item  items-center">
+							Applicant
+							<span class="chevron chevron-down"></span>
 						</div>
-						<div class="flex md:relative items-center">
-							<li class="menu-item">
-								Profession College
-								<span class="chevron chevron-down"></span>
-							</li>
+						<div class="menu-item  items-center">
+							Profession College
+							<span class="chevron chevron-down"></span>
 						</div>
-					</ul>
+					</li>
 				</ul>
 			</nav>
 		</div>
 	</header>
 
 	<!-- Mobile Sidebar -->
-	<aside>
-		<section id="sideBar" class="relative z-50 md:hidden">
-			<div :aria-hidden="!(menuOpen && headerVisible && lastScrollTop > 0)"
-				:class="menuOpen && headerVisible && lastScrollTop >= 0 ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full'"
-				class="fixed w-[50vw] h-[91vh] border-l border-gray-200 shadow-lg  shadow-gray-800 bg-white flex flex-col justify-between top-[80px] right-0 overflow-y-auto transition-all duration-700 ease-in-out">
+	<aside id="sideBar" class="relative z-50 md:hidden">
+		<div :aria-hidden="!(menuOpen && headerVisible && lastScrollTop > 0)"
+			:class="menuOpen && headerVisible && lastScrollTop >= 0 ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full'"
+			class="fixed w-[50vw] h-[91vh] border-l border-gray-200 shadow-lg  shadow-gray-800 bg-white flex flex-col justify-between top-[80px] right-0 overflow-y-auto transition-all duration-700 ease-in-out">
 
-				<ul class="flex flex-col">
-					<sideBarItem iconComponent="Home" iconColor="rgb(120, 120, 120)" text="Home" />
-					<sideBarItem iconComponent="Contact" iconColor="rgb(120, 120, 120)" text="Contact" />
-					<sideBarItem iconComponent="Students" iconColor="rgb(120, 120, 120)" text="Students" />
-					<sideBarItem iconComponent="Applicant" iconColor="rgb(120, 120, 120)" text="Applicant" />
-					<sideBarItem  iconComponent="College" iconColor="rgb(120, 120, 120)" text="College" />
-				</ul>
+			<ul class="flex flex-col">
+				<sideBarItem iconComponent="Home" iconColor="rgb(120, 120, 120)" text="Home" />
+				<sideBarItem iconComponent="Contact" iconColor="rgb(120, 120, 120)" text="Contact" />
+				<sideBarItem iconComponent="Students" iconColor="rgb(120, 120, 120)" text="Students" />
+				<sideBarItem iconComponent="Applicant" iconColor="rgb(120, 120, 120)" text="Applicant" />
+				<sideBarItem iconComponent="College" iconColor="rgb(120, 120, 120)" text="College" />
+			</ul>
 
-
-				<div id="language"
-					class="bar-menu-block border-t border-gray-200 shadow-sm gap-3 font-light text-[1.0rem] flex justify-center text-white  w-full  min-h-[80px]  items-center">
-					<div class="flex gap-1 pb-10 items-center text-[15px]">
-						<Language fillColor="rgb(120, 120, 120)" />
-						<span class="menu-bar-item__lang">ENG</span>
-					</div>
+			<div id="language"
+				class="bar-menu-block border-t border-gray-200 shadow-sm gap-3 font-light text-[1.0rem] flex justify-center text-white  w-full  min-h-[80px]  items-center">
+				<div class="flex gap-1 pb-10 items-center text-[15px]">
+					<Language fillColor="rgb(120, 120, 120)" />
+					<span class="menu-bar-item__lang">ENG</span>
 				</div>
 			</div>
-		</section>
+		</div>
 	</aside>
-	<!-- Mobile Sidebar: End -->
 
 	<!-- Overlay -->
 	<div :class="menuOpen && headerVisible && lastScrollTop >= 0 ? 'opacity-60' : 'opacity-0'"
 		class="w-screen fixed h-screen transition-all duration-700 ease-in-out bg-black  z-40 ">
 	</div>
-	<!-- Main Content: Start -->
+	<!-- Main -->
 	<main class="pt-[80px]">
 		Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quis consequuntur atque, veniam, facilis nemo sequi
 		quasi tenetur sunt similique itaque deserunt voluptate reiciendis dolor ratione perspiciatis, deleniti impedit
@@ -664,8 +656,11 @@ onUnmounted(() => {
 		quasi tenetur sunt similique itaque deserunt voluptate reiciendis dolor ratione perspiciatis, deleniti impedit
 		numquam debitis.
 	</main>
-	<!-- Main Content: End -->
 
+	<!-- Footer -->
+	<footer>
+		<div></div>
+	</footer>
 </template>
 
 
@@ -680,6 +675,10 @@ onUnmounted(() => {
 
 .menu-item {
 	padding-right: 1.2rem;
+
+	@media screen and (min-width: 768px) {
+		position: relative;
+	}
 }
 
 .menu-item:hover {
@@ -687,18 +686,6 @@ onUnmounted(() => {
 	color: rgb(109, 145, 148);
 }
 
-.chevron {
-	position: absolute;
-	right: 0;
-	top: 35%;
-	margin-left: 0.5rem;
-	width: 8px;
-	height: 8px;
-	border-right: 2px solid rgba(2, 37, 10, 0.534);
-	border-bottom: 2px solid rgb(92, 3, 3);
-	transform: rotate(45deg);
-	transition: transform 0.3s ease;
-}
 
 .chevron {
 	position: absolute;
@@ -717,8 +704,6 @@ onUnmounted(() => {
 .menu-item:hover .chevron {
 	transform: rotate(-858deg);
 }
-
-
 
 /* SideBar */
 .bar-menu-block {
@@ -755,8 +740,6 @@ onUnmounted(() => {
 	opacity: 1;
 	transition: 0s
 }
-
-
 
 .menu-bar-item__lang {
 	color: rgb(120, 120, 120);
