@@ -9,7 +9,8 @@ import Close from 'vue-material-design-icons/Close.vue';
 import Language from 'vue-material-design-icons/Earth.vue';
 
 
-let menuOpen = ref(false);
+let desktopMenuOpen = ref(false);
+let mobileMenuOpen = ref(false);
 
 let lastScrollTop = 0;
 let scrollingDown = ref(false);
@@ -51,28 +52,34 @@ onUnmounted(() => {
 
 <template>
 	<!-- Header -->
-	<header id="header" class="header fixed w-full transition-all duration-500 ease-in-out"
-		:class="headerVisible ? 'opacity-100 ' : 'opacity-0 -translate-y-full'">
-		<div class=" shadow-md flex items-center h-[81px] w-full">
+	<header id="header" class="header  fixed w-full transition-all duration-500 ease-in-out" :class="{
+		'opacity-100 ': headerVisible,
+		'opacity-0 -translate-y-full': !headerVisible,
+		'shadow-lg shadow-blue-100': desktopMenuOpen
+	}">
+		<div class=" shadow-md flex items-center px-20 h-[81px] w-full">
 			<nav id="navigation" class="w-full">
+
 				<!-- Mobile Adaptation -->
 				<ul class="menu flex justify-center md:hidden">
 					<li class="menu-item">
 						<img width="160" src="/icons/kogpa-logo.png" alt="Kogpa Accademy Logo">
 					</li>
-					<li @click="menuOpen = !menuOpen" class="menu-item transition-all duration-500  fixed top-7 right-5"					
-						:aria-expanded="menuOpen.toString()" aria-controls="navigation">
-						<component  :is="menuOpen ? Close : Menu" :key="menuOpen ? headerIconMap.close : headerIconMap.menu" />
+					<li @click="menuOpen = !menuOpen" class="menu-item transition-all duration-500  fixed top-7 right-5"
+						:aria-expanded="mobileMenuOpen.toString()" aria-controls="navigation">
+						<component :is="mobileMenuOpen ? Close : Menu"
+							:key="mobileMenuOpen ? headerIconMap.close : headerIconMap.menu" />
 					</li>
 				</ul>
 
 				<!-- Desktop Adaptation -->
-				<ul class="menu hidden px-5 md:flex md:items-center w-[100vw]">
+				<ul class="menu hidden md:flex md:items-center w-[100vw]">
 					<li class="logo">
 						<img width="150" src="/icons/kogpa-logo.png" alt="logo">
 					</li>
 
-					<li class="menu-list pl-10  flex justify-around lg:w-[70vw] md:w-[100vw] text-[1.2rem]">
+					<li @mouseenter="desktopMenuOpen = true" @mouseleave="desktopMenuOpen = false"
+						class="menu-list pl-10 flex justify-around lg:w-[70vw] md:w-[100vw] text-[1.2rem]">
 						<div class="menu-item ">
 							About
 							<span class="chevron chevron-down"></span>
@@ -101,8 +108,8 @@ onUnmounted(() => {
 
 	<!-- Mobile Sidebar -->
 	<aside id="sideBar" class="relative z-50 md:hidden">
-		<div :aria-hidden="!(menuOpen && headerVisible && lastScrollTop > 0)"
-			:class="menuOpen && headerVisible && lastScrollTop >= 0 ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full'"
+		<div :aria-hidden="!(mobileMenuOpen && headerVisible && lastScrollTop > 0)"
+			:class="mobileMenuOpen && headerVisible && lastScrollTop >= 0 ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full'"
 			class="fixed w-[50vw] h-[91vh] border-l border-gray-200 shadow-lg  shadow-gray-800 bg-white flex flex-col justify-between top-[80px] right-0 overflow-y-auto transition-all duration-700 ease-in-out">
 
 			<ul class="flex flex-col">
@@ -124,11 +131,11 @@ onUnmounted(() => {
 	</aside>
 
 	<!-- Overlay -->
-	<div :class="menuOpen && headerVisible && lastScrollTop >= 0 ? 'opacity-60' : 'opacity-0'"
+	<div :class="mobileMenuOpen && headerVisible && lastScrollTop >= 0 || desktopMenuOpen ? 'opacity-60' : 'opacity-0'"
 		class="w-screen fixed h-screen transition-all duration-700 ease-in-out bg-black  z-40 ">
 	</div>
 	<!-- Main -->
-	<main class="pt-[80px]">
+	<main id="main" class="pt-[80px]">
 		Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quis consequuntur atque, veniam, facilis nemo sequi
 		quasi tenetur sunt similique itaque deserunt voluptate reiciendis dolor ratione perspiciatis, deleniti impedit
 		numquam debitis.
@@ -659,8 +666,12 @@ onUnmounted(() => {
 	</main>
 
 	<!-- Footer -->
-	<footer>
-		<div></div>
+	<footer id="footer">
+		<div class="w-full">
+			<div class="w">
+
+			</div>
+		</div>
 	</footer>
 </template>
 
@@ -693,21 +704,22 @@ onUnmounted(() => {
 	right: 0;
 	top: 35%;
 	margin-left: 0.5rem;
-	width: 8px;
-	height: 8px;
+	width: 6px;
+	height: 6px;
 	border-right: 2px solid rgba(2, 37, 10, 0.534);
 	border-bottom: 2px solid rgb(92, 3, 3);
 	transform: rotate(45deg);
 	transition: transform 0.3s ease;
-	border-radius: 50%;
-	opacity: 0;
+	opacity: 0.2;
 	transition: ease-in-out 0.6s;
 }
 
 .menu-item:hover .chevron {
 	transform: rotate(-858deg);
-
+	border-radius: 50%;
 	opacity: 1;
+	width: 8px;
+	height: 8px;
 }
 
 /* SideBar */
