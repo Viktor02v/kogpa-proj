@@ -71,7 +71,8 @@ onUnmounted(() => {
 					<li class="logo">
 						<img width="150" src="/icons/kogpa-logo.png" alt="logo">
 					</li>
-					<li class="menu-list flex justify-around lg:w-[60vw] md:w-[100vw] text-[1.2rem]">
+
+					<li class="menu-list pl-10  flex justify-around lg:w-[70vw] md:w-[100vw] text-[1.2rem]">
 						<div class="menu-item ">
 							About
 							<span class="chevron chevron-down"></span>
@@ -699,10 +700,14 @@ onUnmounted(() => {
 	transform: rotate(45deg);
 	transition: transform 0.3s ease;
 	border-radius: 50%;
+	opacity: 0;
+	transition: ease-in-out 0.6s;
 }
 
 .menu-item:hover .chevron {
 	transform: rotate(-858deg);
+
+	opacity: 1;
 }
 
 /* SideBar */
