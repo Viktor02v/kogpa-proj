@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, reactive, onMounted, onUnmounted } from 'vue';
 import sideBarItem from './components/sideBarItem.vue';
 
 import Menu from 'vue-material-design-icons/Menu.vue';
@@ -9,8 +9,11 @@ import Close from 'vue-material-design-icons/Close.vue';
 import Language from 'vue-material-design-icons/Earth.vue';
 
 
-let desktopMenuOpen = ref(false);
-let mobileMenuOpen = ref(false);
+const toggles = reactive({
+	desktopMenuOpen: ref(false),
+	mobileMenuOpen: ref(false)
+});
+
 
 let lastScrollTop = 0;
 let scrollingDown = ref(false);
@@ -32,7 +35,6 @@ function handleScroll() {
 		headerVisible.value = true;
 
 	}
-
 	lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // Ensure lastScrollTop doesn't go below 0
 }
 
@@ -55,7 +57,7 @@ onUnmounted(() => {
 	<header id="header" class="header  fixed w-full transition-all duration-500 ease-in-out" :class="{
 		'opacity-100 ': headerVisible,
 		'opacity-0 -translate-y-full': !headerVisible,
-		'shadow-lg shadow-blue-100': desktopMenuOpen
+		'shadow-lg shadow-blue-100': toggles.desktopMenuOpen
 	}">
 		<div class=" shadow-md flex items-center px-20 h-[81px] w-full">
 			<nav id="navigation" class="w-full">
@@ -65,10 +67,11 @@ onUnmounted(() => {
 					<li class="menu-item">
 						<img width="160" src="/icons/kogpa-logo.png" alt="Kogpa Accademy Logo">
 					</li>
-					<li @click="menuOpen = !menuOpen" class="menu-item transition-all duration-500  fixed top-7 right-5"
-						:aria-expanded="mobileMenuOpen.toString()" aria-controls="navigation">
-						<component :is="mobileMenuOpen ? Close : Menu"
-							:key="mobileMenuOpen ? headerIconMap.close : headerIconMap.menu" />
+					<li @click="toggles.mobileMenuOpen = !toggles.mobileMenuOpen"
+						class="menu-item transition-all duration-500  fixed top-7 right-5"
+						:aria-expanded="toggles.mobileMenuOpen.toString()" aria-controls="navigation">
+						<component :is="toggles.mobileMenuOpen ? Close : Menu"
+							:key="toggles.mobileMenuOpen ? headerIconMap.close : headerIconMap.menu" />
 					</li>
 				</ul>
 
@@ -78,7 +81,7 @@ onUnmounted(() => {
 						<img width="150" src="/icons/kogpa-logo.png" alt="logo">
 					</li>
 
-					<li @mouseenter="desktopMenuOpen = true" @mouseleave="desktopMenuOpen = false"
+					<li @mouseenter="toggles.desktopMenuOpen = true" @mouseleave="toggles.desktopMenuOpen = false"
 						class="menu-list pl-10 flex justify-around lg:w-[70vw] md:w-[100vw] text-[1.2rem]">
 						<div class="menu-item ">
 							About
@@ -108,8 +111,8 @@ onUnmounted(() => {
 
 	<!-- Mobile Sidebar -->
 	<aside id="sideBar" class="relative z-50 md:hidden">
-		<div :aria-hidden="!(mobileMenuOpen && headerVisible && lastScrollTop > 0)"
-			:class="mobileMenuOpen && headerVisible && lastScrollTop >= 0 ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full'"
+		<div :aria-hidden="!(toggles.mobileMenuOpen && headerVisible && lastScrollTop > 0)"
+			:class="toggles.mobileMenuOpen && headerVisible && lastScrollTop >= 0 ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full'"
 			class="fixed w-[50vw] h-[91vh] border-l border-gray-200 shadow-lg  shadow-gray-800 bg-white flex flex-col justify-between top-[80px] right-0 overflow-y-auto transition-all duration-700 ease-in-out">
 
 			<ul class="flex flex-col">
@@ -131,7 +134,8 @@ onUnmounted(() => {
 	</aside>
 
 	<!-- Overlay -->
-	<div :class="mobileMenuOpen && headerVisible && lastScrollTop >= 0 || desktopMenuOpen ? 'opacity-60' : 'opacity-0'"
+	<div
+		:class="toggles.mobileMenuOpen && headerVisible && lastScrollTop >= 0 || toggles.desktopMenuOpen ? 'opacity-60' : 'opacity-0'"
 		class="w-screen fixed h-screen transition-all duration-700 ease-in-out bg-black  z-40 ">
 	</div>
 	<!-- Main -->
