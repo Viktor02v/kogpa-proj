@@ -1,6 +1,7 @@
 <script setup>
 import { ref, reactive, onMounted, onUnmounted } from 'vue';
 import sideBarItem from './components/sideBarItem.vue';
+import verificationField from './components/verificationField.vue';
 
 import Menu from 'vue-material-design-icons/Menu.vue';
 import Close from 'vue-material-design-icons/Close.vue';
@@ -8,12 +9,11 @@ import Close from 'vue-material-design-icons/Close.vue';
 
 import Language from 'vue-material-design-icons/Earth.vue';
 
-
+// For header
 const toggles = reactive({
 	desktopMenuOpen: ref(false),
 	mobileMenuOpen: ref(false)
 });
-
 
 let lastScrollTop = 0;
 let scrollingDown = ref(false);
@@ -47,6 +47,12 @@ onMounted(() => {
 onUnmounted(() => {
 	window.removeEventListener('scroll', handleScroll);
 });
+
+
+
+// For custom verification field
+
+const isFormValid = ref(null);
 </script>
 
 
@@ -54,35 +60,43 @@ onUnmounted(() => {
 
 <template>
 	<!-- Header -->
-	<header id="header" class="header  fixed w-full transition-all duration-500 ease-in-out" :class="{
+	<header id="header" class="header fixed w-full  transition-all duration-500 ease-in-out" :class="{
 		'opacity-100 ': headerVisible,
 		'opacity-0 -translate-y-full': !headerVisible,
 		'shadow-lg shadow-blue-100': toggles.desktopMenuOpen
 	}">
 		<div class=" shadow-md flex items-center px-20 h-[81px] w-full">
 			<nav id="navigation" class="w-full">
-
 				<!-- Mobile Adaptation -->
-				<ul class="menu flex justify-center md:hidden">
+				<ul class="menu flex justify-center  w-full md:hidden">
 					<li class="menu-item">
 						<img width="160" src="/icons/kogpa-logo.png" alt="Kogpa Accademy Logo">
+
 					</li>
-					<li @click="toggles.mobileMenuOpen = !toggles.mobileMenuOpen"
+					<li v-if="isFormValid" @click="toggles.mobileMenuOpen = !toggles.mobileMenuOpen"
 						class="menu-item transition-all duration-500  fixed top-7 right-5"
 						:aria-expanded="toggles.mobileMenuOpen.toString()" aria-controls="navigation">
 						<component :is="toggles.mobileMenuOpen ? Close : Menu"
 							:key="toggles.mobileMenuOpen ? headerIconMap.close : headerIconMap.menu" />
 					</li>
+
+					<li v-if="!isFormValid"
+					@click="isFormValid = !isFormValid"
+						class=" transition-all duration-500  fixed top-5 p-2 border-[1.5px] border-gray-200 bg-opacity-50 bg-gray-100 text-gray-900 rounded-full right-10">
+						Help
+					</li>
 				</ul>
 
 				<!-- Desktop Adaptation -->
-				<ul class="menu hidden md:flex md:items-center w-[100vw]">
+				<ul class="menu hidden md:flex md:items-center w-full" :class="!isFormValid ? 'justify-center' : ''">
 					<li class="logo">
 						<img width="150" src="/icons/kogpa-logo.png" alt="logo">
 					</li>
 
 					<li @mouseenter="toggles.desktopMenuOpen = true" @mouseleave="toggles.desktopMenuOpen = false"
-						class="menu-list pl-10 flex justify-around lg:w-[70vw] md:w-[100vw] text-[1.2rem]">
+						class="menu-list lg:pl-10 flex justify-around lg:w-[70vw] md:text-[0.9rem] md:w-[70vw]  lg:text-[1.2rem]"
+						:class="!isFormValid ? 'hidden' : ''">
+
 						<div class="menu-item ">
 							About
 							<span class="chevron chevron-down"></span>
@@ -109,6 +123,44 @@ onUnmounted(() => {
 		</div>
 	</header>
 
+
+	<!-- Verification Field -->
+	<section v-if="!isFormValid" id="verification">
+		<div class="w-full h-full pt-[80px] fixed h-[100vh] z-50 bg-white">
+			<div
+				class="w-full h-full flex flex-col gap-10 lg:flex-row md:flex-row md:w-[90vw] md:h-[90vh] lg:w-[90vw] lg:h-[90vh] justify-center items-center">
+
+				<div class="flex w-[60%] md:w-[100%] gap-2  flex-col items-center">
+					<h3 class="text-center sm:text-4xl md:text-5xl lg:text-5xl font-serif text-3xl">Welcome to Kogpa Accademy
+					</h3>
+					<p
+						class=" text-center text-gray-500 text-[0.8rem] text-[0.7rem] sm:text-[0.8rem] md:text-[0.9rem] lg:text-[1rem] font-light">
+						Enter your email and password to acces your account</p>
+				</div>
+
+				<div class="flex w-[50%] sm:w-[40%] md:w-[30%] lg:w-[30%] flex-col gap-8">
+					<verificationField>
+
+					</verificationField>
+
+					<verificationField>
+
+					</verificationField>
+
+					<verificationField>
+
+					</verificationField>
+
+					<button
+						class="bg-gradient-to-r from-cyan-900 to-blue-200 transition-all dutation-500 ease-in-out  text-white py-2 px-4 rounded rounded-lg">
+						<p class="font-serif text-[0.9rem]">Sign in</p>
+					</button>
+				</div>
+			</div>
+		</div>
+	</section>
+
+
 	<!-- Mobile Sidebar -->
 	<aside id="sideBar" class="relative z-50 md:hidden">
 		<div :aria-hidden="!(toggles.mobileMenuOpen && headerVisible && lastScrollTop > 0)"
@@ -133,13 +185,14 @@ onUnmounted(() => {
 		</div>
 	</aside>
 
+
 	<!-- Overlay -->
 	<div
 		:class="toggles.mobileMenuOpen && headerVisible && lastScrollTop >= 0 || toggles.desktopMenuOpen ? 'opacity-60' : 'opacity-0'"
 		class="w-screen fixed h-screen transition-all duration-700 ease-in-out bg-black  z-40 ">
 	</div>
 	<!-- Main -->
-	<main id="main" class="pt-[80px]">
+	<main v-if="isFormValid" id="main" class="pt-[80px]">
 		Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quis consequuntur atque, veniam, facilis nemo sequi
 		quasi tenetur sunt similique itaque deserunt voluptate reiciendis dolor ratione perspiciatis, deleniti impedit
 		numquam debitis.
@@ -670,9 +723,9 @@ onUnmounted(() => {
 	</main>
 
 	<!-- Footer -->
-	<footer id="footer">
-		<div class="w-full">
-			<div class="w">
+	<footer v-if="isFormValid" id="footer">
+		<div class="w-full ">
+			<div class="">
 
 			</div>
 		</div>
