@@ -102,16 +102,24 @@ const validateForm = (isValid) => {
 	isFormValid.value = isValid;
 }
 
+const checkForEmptyFields = () => {
+	return user.value.name !== '' && user.value.email !== '' && user.value.password !== '';
+};
+
 const submit = () => {
 	if (!isFormValid.value) {
-		alert('Form is not valid');
+		alert('Form is not valid(');
 	} else {
+		if (!checkForEmptyFields()) {
+			alert('Some fields are empty(');
+			return;
+		}
 		submited.value = true;
 		alert(`You have successfully signed in as a ${user.value.name}`);
 		setTimeout(() => {
 			isValidated.value = true;
 			console.log('isValidated set to true');
-		}, 1000); // 20 seconds delay (20,000 milliseconds)
+		}, 2000); // 20 seconds delay (20,000 milliseconds)
 	}
 };
 
@@ -179,6 +187,11 @@ const submit = () => {
 							<span class="chevron chevron-down"></span>
 						</div>
 					</li>
+
+					<li v-if="!isValidated"
+						class=" transition-all duration-500  fixed top-5 p-2 border-[1.5px] border-gray-200 bg-opacity-50 bg-gray-100 text-gray-900 rounded-full right-10">
+						Help
+					</li>
 				</ul>
 			</nav>
 		</div>
@@ -191,7 +204,7 @@ const submit = () => {
 			<div
 				class="w-full h-full flex flex-col gap-10 lg:flex-row md:flex-row md:w-[90vw] md:h-[90vh] lg:w-[90vw] lg:h-[90vh] justify-center items-center">
 
-				<div class="flex w-[60%] md:w-[100%] gap-2  flex-col items-center">
+				<div class="flex w-[60%] md:w-[100%] gap-2 pt-8  flex-col items-center">
 					<h3 class="text-center sm:text-4xl md:text-5xl lg:text-5xl font-serif text-3xl">Welcome to Kogpa Accademy
 					</h3>
 					<p
@@ -199,7 +212,7 @@ const submit = () => {
 						Enter your email and password to acces your account</p>
 				</div>
 
-				<div class="flex w-[50%] sm:w-[40%] md:w-[30%] lg:w-[30%] flex-col gap-8">
+				<div class="flex w-[50%] sm:w-[40%] md:w-[30%] lg:w-[30%] flex-col pb-10 gap-8">
 
 					<verificationField v-model="user.name" :component-data="nameComponent" @form-validate="validateForm" />
 
@@ -209,10 +222,9 @@ const submit = () => {
 					<verificationField v-model="user.email" :component-data="emailComponent" @form-validate="validateForm" />
 
 					<button @click="submit"
-						class="bg-gradient-to-r from-cyan-900 to-blue-200 transition-all dutation-500 ease-in-out text-white py-2 px-4 rounded rounded-lg"
-						:class="submited ? 'w-[80px] transition-all duration-500 ease-in-out' : ''">
-						<p v-if="!submited" class="font-serif text-[0.9rem]">Sign in</p>
-						<p v-else class="font-serif text-[0.9rem]">Verified</p>
+						class="bg-gradient-to-r from-cyan-900 flex items-center justify-center w-full to-blue-200 transition-all dutation-500 ease-in-out text-white py-2 px-4 rounded rounded-lg">
+						<span v-if="!submited" class="font-serif text-[0.9rem]">Sign in</span>
+						<img v-else src="/gifs/load.gif" width="30" alt="">
 					</button>
 				</div>
 			</div>
