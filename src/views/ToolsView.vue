@@ -2,7 +2,5 @@
 </script>
 
 <template>
-<div>
-	You're eventually here
-</div>
+	Hi there
 </template>
