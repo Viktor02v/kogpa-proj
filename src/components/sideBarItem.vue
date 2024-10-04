@@ -5,10 +5,17 @@ import Folder from 'vue-material-design-icons/FolderAccountOutline.vue';
 import MailBox from 'vue-material-design-icons/MailboxOpenOutline.vue';
 import Book from 'vue-material-design-icons/BookAccountOutline.vue';
 import BookAlert from 'vue-material-design-icons/BookAlert.vue';
+import Account from 'vue-material-design-icons/AccountCard.vue';
+import Tools from 'vue-material-design-icons/Tools.vue';
+
 
 // Define props
 const props = defineProps({
 	text: {
+		type: String,
+		required: true,
+	},
+	description: {
 		type: String,
 		required: true,
 	},
@@ -29,6 +36,8 @@ const iconMap = {
 	Students: Book,
 	Applicant: BookAlert,
 	College: Folder,
+	Account: Account,
+	Tools: Tools,
 };
 
 // Dynamically resolve the icon component based on the prop value
@@ -36,13 +45,26 @@ const activeIconComponent = computed(() => iconMap[props.iconComponent] || null)
 </script>
 
 <template>
-	<ul
-		class="bar-menu-block border-b border-gray-200 shadow-sm gap-3 font-light text-base flex justify-center text-white w-full min-h-20 items-center">
+	<ul class="bar-menu-block border-b border-gray-200  shadow-sm gap-3 font-light text-base flex justify-center text-white w-full min-h-20 items-center">
+		
 
 		<!-- Use dynamic component binding -->
-		<component v-if="activeIconComponent" :is="activeIconComponent" :fillColor="iconColor" />
 
-		<li class="menu-bar-item">{{ text }}</li>
+		<div v-if="props.description" :class="props.description ? 'flex gap-3 w-full items-center justify-center' : ''" class="">
+			<component v-if="activeIconComponent" :is="activeIconComponent" :fillColor="iconColor" />
+			<li class="menu-bar-item">{{ text }}</li>
+			<li>
+			<p class="text-gray-400 text-[0.7rem]">{{ description }}</p>
+		</li>
+		</div>
+		
+		<div v-else class="flex gap-3 w-full items-center justify-center">
+			<component v-if="activeIconComponent" :is="activeIconComponent" :fillColor="iconColor" />
+			<li class="menu-bar-item">{{ text }}</li>
+		</div>
+
+	
+
 	</ul>
 </template>
 
@@ -56,5 +78,4 @@ const activeIconComponent = computed(() => iconMap[props.iconComponent] || null)
 	transition: color 0.3s ease;
 	color: rgb(255, 255, 255);
 }
-
 </style>
