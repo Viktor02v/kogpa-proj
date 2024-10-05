@@ -71,15 +71,15 @@ const handleSingOut = async () => {
 				</div>
 
 				<button v-if="SingInStore.isSignedIn" @click="handleSingOut"
-					class="bar-menu-block border-b border-gray-200  shadow-sm gap-3 font-light text-base flex justify-center text-white w-full min-h-20 items-center">
+					class="bar-menu-block border-b border-gray-200  shadow-sm gap-3 font-light text-base flex justify-center text-white w-fullitems-center">
 					<AccountOff fillColor="rgb(120, 120, 120)" />
 					<span class="menu-bar-item">Sign Out</span>
 				</button>
 			</ul>
 
 			<div id="language"
-				class="bar-menu-block border-t border-gray-200 shadow-sm gap-3 font-light text-[1.0rem] flex justify-center text-white  w-full  min-h-[80px]  items-center">
-				<div class="flex gap-1 pb-10 items-center text-[15px]">
+				class="bar-menu-block border-t border-gray-200 shadow-sm gap-3 font-light text-[1.0rem]  flex justify-center text-white  w-full  min-h-[90px]  items-center">
+				<div class="flex gap-1  items-center pb-20 text-[15px]">
 					<Language fillColor="rgb(120, 120, 120)" />
 					<span class="menu-bar-item__lang">ENG</span>
 				</div>

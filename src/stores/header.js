@@ -29,7 +29,6 @@ export const useHeaderStore = defineStore('header', () => {
 		} else {
 			scrollingDown.value = false;
 			headerVisible.value = true;
-	
 		}
 		lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // Ensure lastScrollTop doesn't go below 0
 	};

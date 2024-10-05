@@ -16,6 +16,9 @@ import Email from 'vue-material-design-icons/Email.vue';
 // SingIn Store
 import { useSingInStore } from '../stores/singIn.js';
 const SingInStore = useSingInStore();
+// Header Store
+import { useHeaderStore } from '../stores/header.js';
+const headerStore = useHeaderStore();
 
 </script>
 
@@ -81,12 +84,14 @@ const SingInStore = useSingInStore();
 
 			<!-- Enter as User: Mobile Adaptation -->
 			<div class="flex flex-col md:hidden items-center gap-2">
-				<h1 class="text-center sm:text-3xl md:text-4xl lg:text-4xl font-serif text-2xl">Enter as User <span class="text-gray-500 block text-[0.7rem]">For everyone</span></h1>
+				<h1 class="text-center sm:text-3xl md:text-4xl lg:text-4xl font-serif text-2xl">Enter as User <span
+						class="text-gray-500 block text-[0.7rem]">For everyone</span></h1>
 				<p>
 					<router-link to="/">
-					<button type="submit" class="bg-gradient-to-r from-cyan-500 flex gap-2 items-center justify-center w-full to-green-200 transition-all dutation-500 ease-in-out text-white py-2 px-4 rounded rounded-lg">
-						User
-					</button>
+						<button type="submit"
+							class="bg-gradient-to-r from-cyan-500 flex gap-2 items-center justify-center w-full to-green-200 transition-all dutation-500 ease-in-out text-white py-2 px-4 rounded rounded-lg">
+							User
+						</button>
 					</router-link>
 				</p>
 			</div>

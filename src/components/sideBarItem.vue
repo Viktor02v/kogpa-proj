@@ -45,7 +45,7 @@ const activeIconComponent = computed(() => iconMap[props.iconComponent] || null)
 </script>
 
 <template>
-	<ul class="bar-menu-block border-b border-gray-200  shadow-sm gap-3 font-light text-base flex justify-center text-white w-full min-h-20 items-center">
+	<ul class="bar-menu-block border-b border-gray-200  shadow-sm gap-3 font-light text-base flex justify-center text-white w-full  items-center">
 		
 		<!-- Use dynamic component binding -->
 

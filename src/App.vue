@@ -3,6 +3,9 @@
 import { onMounted, onUnmounted } from 'vue';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
+// Components
+import Overlay from './components/overlay.vue';
+
 
 // Pinia stores
 // Header Store
@@ -11,11 +14,10 @@ const headerStore = useHeaderStore();
 
 // SingIn Store
 import { useSingInStore } from './stores/singIn.js';
+
 const SingInStore = useSingInStore();
 
-
-
-
+// Logic
 let auth;
 
 onMounted(() => {
@@ -34,10 +36,8 @@ onMounted(() => {
 });
 
 
-
-
-// Remove event listener on unmount
 onUnmounted(() => {
+	// Remove event listener on unmount
 	window.removeEventListener('scroll', headerStore.handleScroll);
 });
 
@@ -49,7 +49,8 @@ onUnmounted(() => {
 <template>
 	<div class="w-full h-full bg-white relative flex flex-col ">
 
-		<main id="main" class="z-30 pt-[80px]">
+
+		<main id="main" class="z-30 pb-20 pt-[80px]">
 			<RouterView />
 		</main>
 
@@ -57,6 +58,4 @@ onUnmounted(() => {
 </template>
 
 
-<style scoped>
-
-</style>
+<style scoped></style>
