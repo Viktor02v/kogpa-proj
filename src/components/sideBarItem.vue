@@ -47,14 +47,15 @@ const activeIconComponent = computed(() => iconMap[props.iconComponent] || null)
 <template>
 	<ul class="bar-menu-block border-b border-gray-200  shadow-sm gap-3 font-light text-base flex justify-center text-white w-full min-h-20 items-center">
 		
-
 		<!-- Use dynamic component binding -->
 
-		<div v-if="props.description" :class="props.description ? 'flex gap-3 w-full items-center justify-center' : ''" class="">
+		<div v-if="props.description" :class="props.description ? 'flex flex-col gap-3 w-full items-center justify-center' : ''" class="">
+			<div class="flex gap-3 w-full items-center justify-center">
 			<component v-if="activeIconComponent" :is="activeIconComponent" :fillColor="iconColor" />
 			<li class="menu-bar-item">{{ text }}</li>
+		</div>
 			<li>
-			<p class="text-gray-400 text-[0.7rem]">{{ description }}</p>
+			<p class="text-gray-400  text-[0.7rem]">{{ description }}</p>
 		</li>
 		</div>
 		
