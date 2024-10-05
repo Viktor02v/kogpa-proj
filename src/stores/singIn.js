@@ -68,7 +68,7 @@ const singInWithGoogle = () => {
 			if (userEmail === adminEmail) {
 				isSignedIn.value = true;
 				router.push({ name: 'tools' });
-				console.log("Successfully signed in with Google as Admin");
+				alert("Successfully signed in with Google as Admin");
 			} else {
 				// If email doesn't match the admin's email, throw an error
 				alert("Access denied: Only the admin can sign in.");
