@@ -7,7 +7,6 @@ export const useSingInStore = defineStore('singIn', () => {
 
 const router = useRouter();
 
-let auth;
 
 const user = reactive({
 	email: '',
@@ -53,7 +52,7 @@ const singIn = () => {
 
 const singInWithGoogle = () => {
 	const provider = new GoogleAuthProvider();
-	signInWithPopup(getAuth(), provider)
+	signInWithPopup(getAuth(), provider, user.email, user.password)
 	.then((result) =>{
 		isSignedIn.value = true;
 		router.push({ name: 'tools' });

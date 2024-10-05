@@ -42,7 +42,7 @@ router.beforeEach(async(to, from, next) => {
 if(await getCurrentUser()) {
 	next();
 } else {
-	alert('You must sign in to view this page');
+	alert('You must sign in as an admin to view this page');
 	next('/sing-in');
 }
 	} else{
