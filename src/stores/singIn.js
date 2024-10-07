@@ -3,6 +3,8 @@ import { ref, reactive } from 'vue';
 import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { useRouter } from 'vue-router';
 
+import { useHeaderStore } from '../stores/header.js';
+
 
 export const useSingInStore = defineStore('singIn', () => {
 const router = useRouter();
@@ -24,11 +26,13 @@ isSignedIn.value = false;
 
 const singIn = () => {
 	const auth = getAuth();
+	
 	signInWithEmailAndPassword(auth, user.email, user.password)
 		.then((data) => {
 			isSignedIn.value = true;  // Correctly updating the ref's value
-			router.push({ name: 'tools' });  // Redirect after signing in
+			const headerStore = useHeaderStore();
 			headerStore.toggles.mobileMenuOpen = false;
+			router.push({ name: 'tools' });  // Redirect after signing in
 			console.log("Successfully signed in");
 		})
 		.catch((error) => {
@@ -70,8 +74,9 @@ const singInWithGoogle = () => {
 			// Check if the user's email matches the admin email
 			if (userEmail === adminEmail) {
 				isSignedIn.value = true;
-				router.push({ name: 'tools' });
+				const headerStore = useHeaderStore();
 				headerStore.toggles.mobileMenuOpen = false;
+				router.push({ name: 'tools' });
 				alert("Successfully signed in with Google as Admin");
 			} else {
 				// If email doesn't match the admin's email, throw an error
