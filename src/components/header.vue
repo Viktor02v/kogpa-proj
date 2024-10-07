@@ -1,13 +1,35 @@
 <script setup>
+import { getAuth, signOut } from 'firebase/auth';
 
 // Header Store
 import { useHeaderStore } from '../stores/header.js';
 const headerStore = useHeaderStore();
 
+// SingIn Store
+import { useSingInStore } from '../stores/singIn.js';
+const SingInStore = useSingInStore();
+
 
 // Router
 import { useRouter } from 'vue-router';
 const router = useRouter();
+
+const handleSingOut = async () => {
+	try {
+		let auth = getAuth();
+		await signOut(auth);
+		SingInStore.isSignedIn = false;
+		router.push({ name: 'home' });
+		SingInStore.user.email = '';
+		SingInStore.user.password = '';
+		SingInStore.errMsgs.errorEmail = '';
+		SingInStore.errMsgs.errorPassword = '';
+		SingInStore.errMsgs.notFound = '';
+		SingInStore.errMsgs.default = '';
+	} catch (error) {
+		console.error("Error signing out:", error);
+	}
+}
 </script>
 
 <template>
@@ -15,7 +37,6 @@ const router = useRouter();
 	<header id="header" class="header fixed w-full  transition-all duration-500 ease-in-out" :class="{
 		'opacity-100 ': headerStore.headerVisible,
 		'opacity-0 -translate-y-full': !headerStore.headerVisible,
-		'shadow-lg shadow-blue-100': headerStore.toggles.desktopMenuOpen
 	}">
 		<div class=" shadow-md flex items-center px-20 h-[81px] w-full">
 			<nav id="navigation" class="w-full">
@@ -38,7 +59,7 @@ const router = useRouter();
 				</ul>
 
 				<!-- Desktop Adaptation -->
-				<ul class="menu hidden md:flex md:items-center w-full">
+				<ul class="menu hidden md:flex md:items-center justify-between w-full">
 					<router-link to="/">
 						<li class="logo">
 							<img width="150" src="/icons/kogpa-logo.png" alt="logo">
@@ -68,15 +89,34 @@ const router = useRouter();
 							Profession College
 							<span class="chevron chevron-down"></span>
 						</div>
-						<router-link to="/sing-in">
-							<div class="menu-item flex flex-col items-center  items-center">
-								Sing-in
-								<span class="text-[0.7rem] text-gray-400">Only For Admins</span>
+
+						<div class="menu-item  items-center">
+							<router-link to="/tools">
+								Tools
 								<span class="chevron chevron-down"></span>
-							</div>
-						</router-link>
+							</router-link>
+						</div>
+
+						<div v-if="!SingInStore.isSignedIn" class="menu-item ">
+							<router-link to="/sing-in">
+								<div class="flex items-center cursor-pointer flex-col"> Sing-in
+									<span class="text-[0.7rem] text-gray-400">Only For Admins</span>
+									<span class="chevron chevron-down"></span>
+								</div>
+							</router-link>
+						</div>
+
+						<div v-if="SingInStore.isSignedIn" @click="handleSingOut"
+							class="menu-item items-center cursor-pointer">
+							Sing-Out
+							<span class="chevron chevron-down"></span>
+						</div>
 					</li>
 
+					<li>
+						<span v-if="SingInStore.isSignedIn" class="text-orange-400">Admin</span>
+						<span v-else class="text-green-500">User</span>
+					</li>
 				</ul>
 			</nav>
 		</div>
@@ -95,6 +135,7 @@ const router = useRouter();
 .menu-item {
 	padding-right: 1.2rem;
 	display: flex;
+	font-size: 15px;
 
 	@media screen and (min-width: 768px) {
 		position: relative;

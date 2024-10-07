@@ -25,7 +25,6 @@ const headerStore = useHeaderStore();
 <template>
 	<!-- Sing-in Field -->
 	<section id="verification">
-		<!-- <div class="w-full h-[100vh] bg-white"> -->
 		<div
 			class="w-full h-full flex flex-col gap-10 lg:flex-row md:flex-row md:w-[90vw] md:h-[90vh] lg:w-[90vw] lg:h-[90vh] justify-center items-center">
 
@@ -33,8 +32,22 @@ const headerStore = useHeaderStore();
 				<h1 class="text-center sm:text-4xl md:text-5xl lg:text-5xl font-serif text-3xl">Welcome to Kogpa Accademy
 				</h1>
 				<p
-					class=" text-center text-gray-500 text-[0.8rem] text-[0.7rem] sm:text-[0.8rem] md:text-[0.9rem] lg:text-[1rem] font-light">
+					class=" text-center mt-3 text-gray-500 text-[0.8rem] text-[0.7rem] sm:text-[0.8rem] md:text-[0.9rem] lg:text-[1rem] font-light">
 					Enter your email and password to acces your account</p>
+
+				<!-- Enter as User: Desktop Adaptation -->
+				<div v-if="!SingInStore.isSignedIn" class="hidden md:flex mt-10 flex-col items-center gap-2">
+					<h1 class="text-center sm:text-3xl md:text-4xl lg:text-4xl font-serif text-2xl">Enter as User <span
+						class="text-gray-500 block text-[0.7rem]">For everyone</span></h1>
+				<p>
+					<router-link to="/">
+						<button type="submit"
+							class="bg-gradient-to-r from-cyan-500 flex gap-2 items-center justify-center w-full to-green-200 transition-all dutation-500 ease-in-out text-white py-2 px-4 rounded rounded-lg">
+							User
+						</button>
+					</router-link>
+				</p>
+				</div>
 			</div>
 
 			<div class="flex w-[50%] sm:w-[40%] md:w-[30%] lg:w-[30%] flex-col pb-10 gap-8">
@@ -82,6 +95,7 @@ const headerStore = useHeaderStore();
 				</p>
 			</div>
 
+
 			<!-- Enter as User: Mobile Adaptation -->
 			<div class="flex flex-col md:hidden items-center gap-2">
 				<h1 class="text-center sm:text-3xl md:text-4xl lg:text-4xl font-serif text-2xl">Enter as User <span
@@ -96,7 +110,7 @@ const headerStore = useHeaderStore();
 				</p>
 			</div>
 		</div>
-		<!-- </div> -->
+
 	</section>
 
 	<!-- Footer -->

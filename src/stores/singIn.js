@@ -3,10 +3,9 @@ import { ref, reactive } from 'vue';
 import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { useRouter } from 'vue-router';
 
+
 export const useSingInStore = defineStore('singIn', () => {
-
 const router = useRouter();
-
 
 const user = reactive({
 	email: '',
@@ -21,18 +20,22 @@ const errMsgs = reactive({
 });
 
 const isSignedIn = ref(false);
+isSignedIn.value = false;
 
 const singIn = () => {
 	const auth = getAuth();
 	signInWithEmailAndPassword(auth, user.email, user.password)
 		.then((data) => {
-			isSignedIn.value = true;
-			router.push({ name: 'tools' });
+			isSignedIn.value = true;  // Correctly updating the ref's value
+			router.push({ name: 'tools' });  // Redirect after signing in
+			headerStore.toggles.mobileMenuOpen = false;
 			console.log("Successfully signed in");
 		})
 		.catch((error) => {
 			console.log(error.code);
 			alert(error.message);
+
+			// Handling specific errors
 			switch (error.code) {
 				case "auth/invalid-email":
 					errMsgs.errorEmail = "Invalid email";
@@ -48,7 +51,7 @@ const singIn = () => {
 					break;
 			}
 		});
-}
+};
 
 const singInWithGoogle = () => {
 	const auth = getAuth();
@@ -68,6 +71,7 @@ const singInWithGoogle = () => {
 			if (userEmail === adminEmail) {
 				isSignedIn.value = true;
 				router.push({ name: 'tools' });
+				headerStore.toggles.mobileMenuOpen = false;
 				alert("Successfully signed in with Google as Admin");
 			} else {
 				// If email doesn't match the admin's email, throw an error
@@ -97,3 +101,4 @@ const singInWithGoogle = () => {
 
 return { router, user, errMsgs, isSignedIn, singIn, singInWithGoogle }
 })
+
