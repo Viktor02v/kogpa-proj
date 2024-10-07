@@ -47,7 +47,7 @@ const handleSingOut = async () => {
 	<aside aria-hidden="!headerStore.toggles.mobileMenuOpen" id="sideBar" class="fixed z-[99] md:hidden">
 		<div
 			:class="headerStore.toggles.mobileMenuOpen && headerStore.headerVisible && headerStore.lastScrollTop >= 0 ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full'"
-			class="fixed w-[50vw] h-[calc(100vh-80px)] md:h-[100vh] rounded-l-xl overflow-y-auto scroll-smooth border-l border-gray-200 shadow-lg   shadow-gray-800 bg-white flex flex-col justify-between top-[80px] right-0 overflow-y-auto transition-all duration-700 ease-in-out">
+			class="fixed w-[50vw] h-[calc(100svh-80px)] md:h-[100vh] rounded-l-xl overflow-y-auto scroll-smooth border-l border-gray-200 shadow-lg   shadow-gray-800 bg-white flex flex-col justify-between top-[80px] right-0 overflow-y-auto transition-all duration-700 ease-in-out">
 
 			<ul class="flex flex-col  ">
 
