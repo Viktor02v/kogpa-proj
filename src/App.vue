@@ -3,10 +3,6 @@
 import { onMounted, onUnmounted } from 'vue';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
-// Components
-import Overlay from './components/overlay.vue';
-
-
 // Pinia stores
 // Header Store
 import { useHeaderStore } from './stores/header.js';

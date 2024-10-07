@@ -22,9 +22,10 @@ const SingInStore = useSingInStore();
 import { useRouter } from 'vue-router';
 const router = useRouter();
 
+
 const handleSingOut = async () => {
 	try {
-		const auth = getAuth();
+		let auth = getAuth();
 		await signOut(auth);
 		SingInStore.isSignedIn = false;
 		router.push({ name: 'home' });
@@ -34,11 +35,11 @@ const handleSingOut = async () => {
 		SingInStore.errMsgs.errorPassword = '';
 		SingInStore.errMsgs.notFound = '';
 		SingInStore.errMsgs.default = '';
+		headerStore.toggles.mobileMenuOpen = false;
 	} catch (error) {
 		console.error("Error signing out:", error);
 	}
 }
-
 </script>
 
 <template>
@@ -46,11 +47,11 @@ const handleSingOut = async () => {
 	<aside aria-hidden="!headerStore.toggles.mobileMenuOpen" id="sideBar" class="fixed z-[99] md:hidden">
 		<div
 			:class="headerStore.toggles.mobileMenuOpen && headerStore.headerVisible && headerStore.lastScrollTop >= 0 ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full'"
-			class="fixed w-[50vw] h-full overflow-y-auto scroll-smooth border-l border-gray-200 shadow-lg   shadow-gray-800 bg-white flex flex-col top-[80px] right-0 overflow-y-auto transition-all duration-700 ease-in-out">
+			class="fixed w-[50vw] h-[calc(100vh-80px)] md:h-[100vh] rounded-l-xl overflow-y-auto scroll-smooth border-l border-gray-200 shadow-lg   shadow-gray-800 bg-white flex flex-col justify-between top-[80px] right-0 overflow-y-auto transition-all duration-700 ease-in-out">
 
-			<ul class="flex flex-col">
+			<ul class="flex flex-col  ">
 
-				<router-link to="/">
+				<router-link to="/" @click="headerStore.toggles.mobileMenuOpen = false">
 					<sideBarItem iconComponent="Home" iconColor="rgb(120, 120, 120)" text="Home" />
 				</router-link>
 
@@ -59,7 +60,7 @@ const handleSingOut = async () => {
 				<sideBarItem iconComponent="Applicant" iconColor="rgb(120, 120, 120)" text="Applicant" />
 				<sideBarItem iconComponent="College" iconColor="rgb(120, 120, 120)" text="College" />
 
-				<router-link to="/tools">
+				<router-link to="/tools" @click="headerStore.toggles.mobileMenuOpen = false">
 					<sideBarItem iconComponent="Tools" iconColor="rgb(120, 120, 120)" text="Tools" />
 				</router-link>
 
@@ -71,20 +72,30 @@ const handleSingOut = async () => {
 				</div>
 
 				<button v-if="SingInStore.isSignedIn" @click="handleSingOut"
-					class="bar-menu-block border-b border-gray-200   shadow-sm gap-3 font-light text-base flex justify-center items-center h-[110px] text-white w-fullitems-center">
+					class="bar-menu-block border-b border-gray-200   shadow-sm gap-3 font-light text-base flex justify-center items-center h-[91px] text-white w-fullitems-center">
 					<AccountOff fillColor="rgb(120, 120, 120)" />
 					<span class="menu-bar-item">Sign Out</span>
 				</button>
 
-				<div id="language"
-				class="bar-menu-block border-t border-gray-200 shadow-sm gap-3 font-light text-[1.0rem] flex justify-center text-white w-full h-[140px] pb-10  items-center">
-				<div class="flex gap-1  items-center text-[15px]">
-					<Language fillColor="rgb(120, 120, 120)" />
-					<span class="menu-bar-item__lang">ENG</span>
+				
+				<div id="status"
+					class="bar-menu-block border-t border-gray-200 shadow-sm gap-3 font-light text-[1.0rem] flex justify-center text-white w-full h-[50px] pb-10  items-center">
+					<div class="flex gap-1  items-center text-[15px]">
+						<span v-if="!SingInStore.isSignedIn" class="text-green-500">User</span>
+						<span v-else class="text-orange-400">Admin</span>
+					</div>
 				</div>
-			</div>
 			</ul>
 
+			<ul>
+				<div id="language"
+					class="bar-menu-block border-t border-gray-200 shadow-sm gap-3 font-light text-[1.0rem] flex justify-center text-white w-full h-[140px] pb-10  items-center">
+					<div class="flex gap-1  items-center text-[15px]">
+						<Language fillColor="rgb(120, 120, 120)" />
+						<span class="menu-bar-item__lang">ENG</span>
+					</div>
+				</div>
+			</ul>
 		</div>
 	</aside>
 </template>

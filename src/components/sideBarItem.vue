@@ -59,7 +59,7 @@ const activeIconComponent = computed(() => iconMap[props.iconComponent] || null)
 		</li>
 		</div>
 		
-		<div v-else class="flex gap-3 w-full items-center min-h-[70px] justify-center">
+		<div v-else class="flex gap-3 w-full items-center min-h-[50px] justify-center">
 			<component v-if="activeIconComponent" :is="activeIconComponent" :fillColor="iconColor" />
 			<li class="menu-bar-item">{{ text }}</li>
 		</div>
